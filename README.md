@@ -36,6 +36,18 @@ nano /etc/network/interfaces
 ```
 #### Назначил IP на интерфейсы в соответствии с таблицей адресации
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/341c8d30-d836-43ad-a6a1-1c327e239a98)
+#### Сохранил конфигурацию комбинацией клавишь
+```
+Ctrl+S
+```
+#### Вышел из конфгурационного файла комбинацией клавишь
+```
+Ctrl+X
+```
+#### Перезагрузил Сервис работы с сетью
+```
+Systemctl restart networking.service
+```
 ***По аналогии делаем все тоже самое и на других виртуальных машинах.***
 
 ## №1.2
@@ -50,3 +62,44 @@ apt-get install frr
 systemctl status frr
 ```
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/30a2d62a-4480-4427-bc38-e8edbcbe8db7)
+## №
+#### Установил Serial Port на виртуальную машину
+1. Выключил виртуальную машину
+2. Открыл Edit settings
+3. Нажал Add other device
+4. Выбрал Serial port
+5. Изменил Use output file на Use network у serial port 1
+6. Назначил номер порту
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/9644ca07-8e54-4034-856a-33fb80c93182)
+7. Включил виртуальную машину
+#### Powershell (cmd)
+Зашёл в свой ESXi с помощью команды 
+```
+ssh -l root 10.12.24.5
+```
+Ввёл пароль
+Посмотрел список правил Firewall
+```
+esxcli network firewall ruleset list
+```
+Включил правила подключения SerialPort
+```
+esxcli network firewall ruleset set --enabled=true --ruleset-id=remoteSerialPort
+```
+Посмотрел изменения в списке правил Firewall
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/b52ae0fa-3f34-499e-a007-a165b79c96ef)
+#### Настройка скрипта
+Ввёл команду для запуска службы
+```
+systemctl start serial-getty@ttyS0.service
+```
+Ввёл команду для автозапуска скрипта
+```
+systemctl enable serial-getty@ttyS0.service
+```
+#### PuTTY
+Открыл PuTTY
+Ввёл свой IP и номер порта 
+в type connection выбрал other
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/41c56534-0b65-44f3-b453-fda6cc08cee7)
+нажал подключиться
