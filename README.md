@@ -141,5 +141,5 @@ iperf3 -s
 ```
 iperf3 -c 192.168.0.162 -f K
 ```
-Получаию информацию о подключении 
+Получаю информацию о подключении   
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/ddcc3b07-089c-4e9b-a345-6f9bdcabec59)
