@@ -100,6 +100,6 @@ systemctl enable serial-getty@ttyS0.service
 #### PuTTY
 Открыл PuTTY
 Ввёл свой IP и номер порта 
-в type connection выбрал other
-![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/41c56534-0b65-44f3-b453-fda6cc08cee7)
+в type connection выбрал other  
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/41c56534-0b65-44f3-b453-fda6cc08cee7)  
 нажал подключиться
