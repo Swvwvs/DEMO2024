@@ -69,7 +69,7 @@ systemctl status frr
 3. Нажал Add other device
 4. Выбрал Serial port
 5. Изменил Use output file на Use network у serial port 1
-6. Назначил номер порту
+6. Назначил номер порту  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/9644ca07-8e54-4034-856a-33fb80c93182)
 7. Включил виртуальную машину
 #### Powershell (cmd)
@@ -88,7 +88,7 @@ esxcli network firewall ruleset set --enabled=true --ruleset-id=remoteSerialPort
 ```
 Посмотрел изменения в списке правил Firewall  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/b52ae0fa-3f34-499e-a007-a165b79c96ef)
-#### Настройка скрипта
+#### Настройка службы подключения
 Ввёл команду для запуска службы
 ```
 systemctl start serial-getty@ttyS0.service
