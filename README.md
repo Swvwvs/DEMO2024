@@ -86,7 +86,7 @@ esxcli network firewall ruleset list
 ```
 esxcli network firewall ruleset set --enabled=true --ruleset-id=remoteSerialPort
 ```
-Посмотрел изменения в списке правил Firewall
+Посмотрел изменения в списке правил Firewall  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/b52ae0fa-3f34-499e-a007-a165b79c96ef)
 #### Настройка скрипта
 Ввёл команду для запуска службы
