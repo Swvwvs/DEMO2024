@@ -78,7 +78,7 @@ apt-get install frr
 systemctl status frr
 ```
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/30a2d62a-4480-4427-bc38-e8edbcbe8db7)
-## №
+## №00
 #### Установил Serial Port на виртуальную машину
 1. Выключил виртуальную машину
 2. Открыл Edit settings
@@ -119,3 +119,27 @@ systemctl enable serial-getty@ttyS0.service
 в type connection выбрал other  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/41c56534-0b65-44f3-b453-fda6cc08cee7)  
 нажал подключиться
+## №1.5
+## устновка iperf3 и измерение пропускной способности между двумя узлами HQ-R и ISP
+Уставил iperf3 на обоих машинах
+```
+apt-get install iperf3
+```
+Установил ufw
+```
+apt-get install ufw
+```
+Назначил порт 5201 на обоих машинах
+```
+ufw allow 5201
+```
+Запустил серверную часть программы на ISP
+```
+iperf3 -s
+```
+Подключаюсь на HQ-R к серверу ISP
+```
+iperf3 -c 192.168.0.162 -f K
+```
+Получаию информацию о подключении 
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/ddcc3b07-089c-4e9b-a345-6f9bdcabec59)
