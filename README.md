@@ -76,8 +76,52 @@ apt-get install frr
 ### После установки frr проверил его состояние
 ```
 systemctl status frr
-```
+```  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/30a2d62a-4480-4427-bc38-e8edbcbe8db7)
+### Зашёл в файл
+```
+nano /etc/frr/daemons
+```
+### Изменил значение ospfd
+```
+ospfd=yes
+```
+### Перезагрузил службу frr
+```
+systemctl restart frr
+```
+### Зашёл в настройку маршрутизации на ISP через команду 
+```
+vtysh
+```
+### Посмотрел IP адреса и их состояние
+```
+show ip interface brief
+```
+### Зашёл в конфигурацию терминала 
+```
+conf t
+```
+### Запустил процесс OSPF
+```
+router ospf
+```
+### Внёс интерфейсы
+```
+network 192.168.0.162/30 area 0
+network 192.168.0.166/30 area 0
+```
+### Посмотрел соседей
+```
+do show ip ospf neighbor
+```  
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/5b946b34-545d-4d34-b7b2-8c24af65820d)  
+### Сохранил конфигурацию
+```
+copy running-config startup-config
+```  
+***По аналогии делаем все тоже самое и на других виртуальных машинах.***
+
 ## №00
 #### Установил Serial Port на виртуальную машину
 1. Выключил виртуальную машину
