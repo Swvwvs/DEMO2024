@@ -145,7 +145,7 @@ passwd Admin
 ```
 nano /etc/passwd
 ```
-![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/9aa73d01-5772-42b6-89bc-6f6b4543a9a2)
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/9aa73d01-5772-42b6-89bc-6f6b4543a9a2)  
 ***По аналогии делаем все тоже самое и на виртуальных машинах по таблице***
 ## №00
 #### Установил Serial Port на виртуальную машину
