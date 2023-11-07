@@ -35,6 +35,7 @@ ip a
 nano /etc/network/interfaces
 ```
 #### Назначил IP на интерфейсы в соответствии с таблицей адресации
+  #### ISP
 ```
 auto ens192
 iface ens192 inet static
@@ -51,6 +52,48 @@ auto ens256
 iface ens256 inet static
 address 192.168.0.162
 netmask 255.255.255.252
+```
+#### HQ-R
+```
+auto ens192
+iface ens192 inet static
+address 192.168.0.161
+netmask 255.255.255.252
+gateway 192.168.0.162
+
+auto ens224
+iface ens224 inet static
+address 192.168.0.1
+netmask 255.255.255.128
+```
+#### BR-R
+```
+auto ens192
+iface ens192 inet static
+address 192.168.0.165
+netmask 255.255.255.252
+gateway 192.168.0.166
+
+auto ens224
+iface ens224 inet static
+address 192.168.0.129
+netmask 255.255.255.224
+```
+#### HQ-SRV
+```
+auto ens192
+iface ens192 inet static
+address 192.168.0.126
+netmask 255.255.255.128
+gateway 192.168.0.1
+```
+#### BR-SRV
+```
+auto ens192
+iface ens192 inet static
+address 192.168.0.158
+netmask 255.255.255.224
+gateway 192.168.0.129
 ```
 #### Сохранил конфигурацию комбинацией клавишь
 ```
@@ -253,3 +296,5 @@ ls -a
 Убеждаюсь что скрипт сработал  
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/e7cf7f95-fdb8-4370-8998-23fe97a57162)  
 ***файл Backup-а находится в каталоге***
+## №2.1
+#### DNS-сервер на HQ-SRV
