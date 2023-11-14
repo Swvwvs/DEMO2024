@@ -297,4 +297,129 @@ ls -a
 ![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/e7cf7f95-fdb8-4370-8998-23fe97a57162)  
 ***файл Backup-а находится в каталоге***
 ## №2.1
-#### DNS-сервер на HQ-SRV
+#### DNS-сервер на HQ-SRV с прямой и обратной зоной
+|Имя             |Тип записи          |Адрес           |
+|  ------------- | -------------      | -------------  |
+|hq-r.hq.work    |A, PTR              |IP-адрес        |
+|hq-srv.hq.work  |A, PTR              | IP-адрес       |  
+
+|Имя             |Тип записи          |Адрес           |
+|  ------------- | -------------      | -------------  |
+|br-r.br.work    |A, PTR              |IP-адрес        |
+|br-srv.br.work  |A                   | IP-адрес       |  
+
+Установил bind9 с доп.пакетами
+```
+apt-get install bind9 bind9utils bind9-doc
+```
+Настроил режим IPv4
+```
+nano /etc/default/named
+```
+Ввёл 
+```
+OPTIONS="-u bind -4"
+```
+Зашёл в resolv.conf
+```
+nano /etc/resolv.conf
+```
+Ввёл IP интерфейса HQ-srv
+```
+nameserver 192.168.0.126
+```
+Открыл файл `/etc/bind/named.conf.options`
+В блок `options` внес:
+```
+listen-on { 127.0.0.1; 192.168.0.126; };
+listen-on-v6 { none; };
+allow-query { any; };
+forward first;
+forwarders { 8.8.8.8;};
+```
+Прописал зоны в файле `/etc/bind/named.conf.default-zones`:
+```
+zone "hq.work" {
+  type master;
+  file "/etc/bind/db.hq";
+};
+
+zone "br.work" {
+  type master;
+  file "/etc/bind/db.local";
+};
+
+zone "0.168.192.in-addr.arpa" {
+  type master;
+  file "/etc/bind/0.168.192.in-addr.arpa.zone";
+};
+```
+Создал файл прямой зоны для офиса **HQ**, скопировав файл **`/etc/bind/db.127`**. Назвал его **`db.hq`**:
+```
+cp /etc/bind/db.127 /etc/bind/db.hq
+```
+Создал файл прямой зоны для офиса **BR**, скопировав файл **`/etc/bind/db.127`**. Назвал его **`db.local`**:
+```
+cp /etc/bind/db.127 /etc/bind/db.local
+```
+Cкопировал файл **`/etc/bind/db.127`**:
+```
+cp /etc/bind/db.127 /etc/bind/0.168.192.in-addr.arpa.zone
+```
+Заполнил файл прямой зоны **HQ**
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL  604800
+@         IN    SOA    hq.work.  root.hq.work.  (
+                        3    ; Serial
+                   604800    ; Refresh
+                    86400    ; Retry
+                  2419200    ; Expire
+                   604800    ; Negative Cache TTL
+;
+@         IN    NS    localhost.
+@         IN    A     192.168.0.3
+@         IN    AAAA  ::1
+hq-srv    IN    A    192.168.0.3
+hq-r      IN    A    192.168.0.126
+```
+Заполнил файл прямой зоны **BR**
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL  604800
+@         IN    SOA    branch.work.  root.branch.work.  (
+                        3    ; Serial
+                   604800    ; Refresh
+                    86400    ; Retry
+                  2419200    ; Expire
+                   604800 )  ; Negative Cache TTL
+;
+@         IN    NS    localhost.
+@         IN    A     192.168.0.3
+@         IN    AAAA  ::1
+br-srv    IN    A    192.168.0.129
+br-r      IN    A    192.168.0.158
+```
+Заполнил файл обратной зоны
+```
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL  604800
+@         IN    SOA    work.  root.work.  (
+                        3    ; Serial
+                   604800    ; Refresh
+                    86400    ; Retry
+                  2419200    ; Expire
+                   604800 )  ; Negative Cache TTL
+;
+@         IN    NS    localhost.
+126       IN    PTR   hq-r.hq.work.
+3         IN    PTR   hq-srv.hq.work.
+158       IN    PTR   br-r.br.work.
+129       IN    PTR   br-srv.br.work.
+```
