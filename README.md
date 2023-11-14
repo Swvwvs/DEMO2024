@@ -380,10 +380,10 @@ $TTL  604800
                    604800    ; Negative Cache TTL
 ;
 @         IN    NS    localhost.
-@         IN    A     192.168.0.3
+@         IN    A     192.168.0.126
 @         IN    AAAA  ::1
-hq-srv    IN    A    192.168.0.3
-hq-r      IN    A    192.168.0.126
+hq-srv    IN    A    192.168.0.126
+hq-r      IN    A    192.168.0.1
 ```
 Заполнил файл прямой зоны **BR**
 ```
@@ -399,10 +399,10 @@ $TTL  604800
                    604800 )  ; Negative Cache TTL
 ;
 @         IN    NS    localhost.
-@         IN    A     192.168.0.3
+@         IN    A     192.168.0.126
 @         IN    AAAA  ::1
-br-srv    IN    A    192.168.0.129
-br-r      IN    A    192.168.0.158
+br-srv    IN    A    192.168.0.158
+br-r      IN    A    192.168.0.129
 ```
 Заполнил файл обратной зоны
 ```
@@ -418,8 +418,30 @@ $TTL  604800
                    604800 )  ; Negative Cache TTL
 ;
 @         IN    NS    localhost.
-126       IN    PTR   hq-r.hq.work.
-3         IN    PTR   hq-srv.hq.work.
-158       IN    PTR   br-r.br.work.
-129       IN    PTR   br-srv.br.work.
+1         IN    PTR   hq-r.hq.work.
+126       IN    PTR   hq-srv.hq.work.
+129       IN    PTR   br-r.br.work.
+158       IN    PTR   br-srv.br.work.
+```
+Проверил работоспособность прямой зоны HQ и BR:
+```
+nslookup hq-r.hq.work
+```
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/fc6595d6-0efd-46e4-9e12-eaf44406e627)  
+```
+nslookup br-r.br.work
+```
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/ef194181-731e-4a2a-bdb7-b442814c93ed)  
+Проверил обратную зону:
+```
+nslookup 192.168.0.126
+```
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/6a2e595f-45c5-4c46-94f1-d3cb45ff93f0)  
+```
+nslookup 192.168.0.158
+```
+![image](https://github.com/Swvwvs/DEMO2024/assets/148449545/288a8f18-78bd-484b-b707-b155e9352aa3)
+С помощью команды named-checkconf можно проверить синтаксис файлов named на ошибки:
+```
+named-checkconf
 ```
